@@ -27,7 +27,7 @@ const editionMode = ref(false);
 const currentArticle = ref({})
 const setCurrentArticle = (article) => {
   currentArticle.value = article;
-  editionMode.value = !editionMode.value;
+  editionMode.value = true;
   }
 
 
