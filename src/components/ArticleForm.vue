@@ -15,8 +15,9 @@
               name="articlePrice"
               id="articlePrice"
               v-model.number="article.price"
+              @blur="formatPrice"
+              inputmode="decimal"
               placeholder="20.00"
-              step="0.01"
               min="0"
           />
           <span class="input-suffix">€</span>
@@ -34,9 +35,10 @@
               id="vat"
               v-model.number="article.vat"
               placeholder="20,00"
-              step="0.01"
               min="0"
               max="100"
+              inputmode="decimal"
+              @blur="formatVat"
           />
           <span class="input-suffix">%</span>
         </div>
@@ -61,8 +63,6 @@ const article = defineModel('article')
 // Définir les émissions possibles
 const emit = defineEmits(['save-article'])
 
-console.log("ARTICLE", article.value)
-
 const title = computed(() => {
   return edition.value === true ? "Editer un article" : "Ajouter un article";
 })
@@ -77,8 +77,19 @@ const priceTi = computed(() => {
   return (price * (1 + vat / 100)).toFixed(2);
 })
 
+function formatPrice(event) {
+  const formattedPrice = parseFloat(article.value.price) || 0;
+  event.target.value = formattedPrice.toFixed(2);
+
+}function formatVat(event) {
+  const formattedVat = parseFloat(article.value.price) || 0;
+  event.target.value = formattedVat.toFixed(2);
+}
+
+
 const handleSave = () => {
   // Validation basique avant émission
+  console.log("ARTICLE", article.value)
   if (!article.value.name || !article.value.price) {
     alert('Veuillez remplir au minimum le nom et le prix de l\'article');
     return;

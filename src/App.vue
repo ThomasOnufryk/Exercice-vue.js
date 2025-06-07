@@ -28,8 +28,8 @@ import ArticleForm from "@/components/ArticleForm.vue";
 import ArticleList from "@/components/ArticleList.vue";
 
 const articles = ref([
-  {name: "Achat de matériel", price: 20, vat: 20},
-  {name: "Dépose des murs", price: 150, vat: 20},
+  {name: "Achat de matériel", price: 20.00, vat: 20.00},
+  {name: "Dépose des murs", price: 150.00, vat: 20.00},
 ])
 const editionMode = ref(false);
 const currentArticle = ref({})
