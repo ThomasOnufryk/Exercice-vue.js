@@ -1,5 +1,5 @@
 <template>
- <p>{{article.name}}</p>
+  <p class="list-item">{{ article.name }}</p>
 </template>
 
 <script setup>

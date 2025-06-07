@@ -2,35 +2,66 @@
   <div class="block">
     <div class="list">
       <h1>Mes Articles</h1>
-      <ul>
-        <li v-for="(article, index) in articles" @click="setCurrentArticle(article)" :key="index">
-          <ArticleList :article="article"/>
-        </li>
-      </ul>
-    </div>
-    <div class="form">
-      <ArticleForm v-model:article="currentArticle" v-model:editionMode="editionMode"/>
-    </div>
-  </div>
+      <template v-if="articles.length">
+        <div class="ul">
+          <ul>
+            <li v-for="(article, index) in articles" @click="setCurrentArticle(article, index)" :key="index">
+              <ArticleList :article="article"/>
+            </li>
+          </ul>
 
+        </div>
+      </template>
+      <template v-else>
+        <h3>Vous n'avez pas encore enregistré d'articles dans votre liste</h3>
+      </template>
+    </div>
+
+    <ArticleForm v-model:article="currentArticle" v-model:editionMode="editionMode" @save-article="saveArticle"/>
+
+  </div>
 </template>
 
 <script setup>
-import { ref} from "vue";
+import {ref} from "vue";
 import ArticleForm from "@/components/ArticleForm.vue";
 import ArticleList from "@/components/ArticleList.vue";
+
 const articles = ref([
-  { name:"Achat de matériel", price: 20, vat:20},
-  { name:"Dépose des murs", price: 150, vat:20},
+  {name: "Achat de matériel", price: 20, vat: 20},
+  {name: "Dépose des murs", price: 150, vat: 20},
 ])
 const editionMode = ref(false);
 const currentArticle = ref({})
-const setCurrentArticle = (article) => {
-  currentArticle.value = article;
+const currentIndex = ref(-1); // Pour tracker l'index de l'article en cours d'édition
+
+const setCurrentArticle = (article, index) => {
+  // Créer une copie de l'article pour éviter de modifier l'original
+  currentArticle.value = {...article};
+  currentIndex.value = index;
   editionMode.value = true;
+}
+
+const saveArticle = () => {
+  if (editionMode.value && currentIndex.value >= 0) {
+    // Mode édition : remplacer l'article existant
+    articles.value[currentIndex.value] = {...currentArticle.value};
+  } else {
+    // Mode création : ajouter un nouvel article
+    articles.value.push({...currentArticle.value});
   }
 
+  // Réinitialiser après sauvegarde
+  editionMode.value = false;
+  currentArticle.value = {};
+  currentIndex.value = -1;
+}
 
+const newArticle = () => {
+  editionMode.value = false;
+  currentArticle.value = {};
+  currentIndex.value = -1;
+}
 </script>
 
 <style scoped>
