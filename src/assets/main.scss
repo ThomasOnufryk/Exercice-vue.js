@@ -7,7 +7,7 @@ body {
   padding: 0;
   background-color: #F4FAFF;
   font-family: 'Source Sans Pro', sans-serif;
-  height: 100dvh;
+  height: 100lvh;
 }
 
 h1 {
@@ -18,7 +18,7 @@ h1 {
 #app {
   background-color: #F4FAFF;
   max-width: 980px;
-  height: 100vh;
+  height: 100svh;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
@@ -44,7 +44,7 @@ li:not(:last-child) {
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 5px;
-  min-height: 350px;
+  min-height: 200px;
   overflow-y: auto;
 
   .list-item {
@@ -54,10 +54,10 @@ li:not(:last-child) {
 
 .form {
   background-color: #fff;
-  margin-left:10px;
   padding: 1.5rem;
   border-radius: 5px;
   height: 350px;
+  margin-left: 15px;
 
   .form-label {
     position: relative;
@@ -158,6 +158,7 @@ li:not(:last-child) {
   }
   .form {
     height: 45vh;
+    margin-left: 0;
   }
   h1 {
     position: sticky;
