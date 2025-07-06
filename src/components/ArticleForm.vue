@@ -11,7 +11,6 @@
         </label>
         <div class="input-group">
           <input
-              type="number"
               name="articlePrice"
               id="articlePrice"
               v-model.number="article.price"
@@ -30,7 +29,6 @@
         </label>
         <div class="input-group">
           <input
-              type="number"
               name="vat"
               id="vat"
               v-model.number="article.vat"
@@ -81,15 +79,15 @@ function formatPrice(event) {
   const formattedPrice = parseFloat(article.value.price) || 0;
   event.target.value = formattedPrice.toFixed(2);
 
-}function formatVat(event) {
-  const formattedVat = parseFloat(article.value.price) || 0;
+}
+function formatVat(event) {
+  const formattedVat = parseFloat(article.value.vat) || 0;
   event.target.value = formattedVat.toFixed(2);
 }
 
 
 const handleSave = () => {
-  // Validation basique avant émission
-  console.log("ARTICLE", article.value)
+
   if (!article.value.name || !article.value.price) {
     alert('Veuillez remplir au minimum le nom et le prix de l\'article');
     return;

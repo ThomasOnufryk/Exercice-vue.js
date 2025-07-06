@@ -3,14 +3,11 @@
     <div class="list">
       <h1>Mes Articles</h1>
       <template v-if="articles.length">
-        <div class="ul">
-          <ul>
-            <li v-for="(article, index) in articles" @click="setCurrentArticle(article, index)" :key="index">
-              <ArticleList :article="article"/>
-            </li>
-          </ul>
-
-        </div>
+        <ul>
+          <li v-for="(article, index) in articles" @click="setCurrentArticle(article, index)" :key="index">
+            <ArticleList :class="{'selected': currentIndex === index}" :article="article"/>
+          </li>
+        </ul>
       </template>
       <template v-else>
         <h3>Vous n'avez pas encore enregistré d'articles dans votre liste</h3>
@@ -31,12 +28,12 @@ const articles = ref([
   {name: "Achat de matériel", price: 20.00, vat: 20.00},
   {name: "Dépose des murs", price: 150.00, vat: 20.00},
 ])
+
 const editionMode = ref(false);
 const currentArticle = ref({})
-const currentIndex = ref(-1); // Pour tracker l'index de l'article en cours d'édition
+const currentIndex = ref(-1);
 
 const setCurrentArticle = (article, index) => {
-  // Créer une copie de l'article pour éviter de modifier l'original
   currentArticle.value = {...article};
   currentIndex.value = index;
   editionMode.value = true;
@@ -44,14 +41,11 @@ const setCurrentArticle = (article, index) => {
 
 const saveArticle = () => {
   if (editionMode.value && currentIndex.value >= 0) {
-    // Mode édition : remplacer l'article existant
     articles.value[currentIndex.value] = {...currentArticle.value};
   } else {
-    // Mode création : ajouter un nouvel article
     articles.value.push({...currentArticle.value});
   }
 
-  // Réinitialiser après sauvegarde
   editionMode.value = false;
   currentArticle.value = {};
   currentIndex.value = -1;
@@ -65,5 +59,7 @@ const newArticle = () => {
 </script>
 
 <style scoped>
-
+.selected {
+  background-color: lightgrey;
+}
 </style>
