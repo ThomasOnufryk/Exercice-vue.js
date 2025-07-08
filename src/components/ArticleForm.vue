@@ -47,7 +47,8 @@
         <div>{{ priceTi }} €</div>
       </div>
 
-      <button class="submit" type="button" @click="handleSave">{{ buttonTitle }}</button>
+      <button class="button" type="button" @click="handleSave">{{ buttonTitle }}</button>
+      <button class="button button--white" v-show="edition" type="button" @click="handleNewArticle">Nouvel article</button>
     </form>
   </div>
 </template>
@@ -59,7 +60,7 @@ const edition = defineModel('editionMode')
 const article = defineModel('article')
 
 // Définir les émissions possibles
-const emit = defineEmits(['save-article'])
+const emit = defineEmits(['save-article', 'new-article'])
 
 const title = computed(() => {
   return edition.value === true ? "Editer un article" : "Ajouter un article";
@@ -80,11 +81,15 @@ function formatPrice(event) {
   event.target.value = formattedPrice.toFixed(2);
 
 }
+
 function formatVat(event) {
   const formattedVat = parseFloat(article.value.vat) || 0;
   event.target.value = formattedVat.toFixed(2);
 }
 
+const handleNewArticle = () => {
+  emit("new-article");
+}
 
 const handleSave = () => {
 

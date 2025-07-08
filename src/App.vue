@@ -3,18 +3,20 @@
     <div class="list">
       <h1>Mes Articles</h1>
       <template v-if="articles.length">
-        <ul>
-          <li v-for="(article, index) in articles" @click="setCurrentArticle(article, index)" :key="index">
-            <ArticleList :class="{'selected': currentIndex === index}" :article="article"/>
-          </li>
-        </ul>
+        <div class="articles-list">
+          <ul>
+            <li v-for="(article, index) in articles" @click="setCurrentArticle(article, index)" :key="index">
+              <ArticleList :class="{'selected': currentIndex === index}" :article="article"/>
+            </li>
+          </ul>
+        </div>
       </template>
       <template v-else>
         <h3>Vous n'avez pas encore enregistré d'articles dans votre liste</h3>
       </template>
     </div>
 
-    <ArticleForm v-model:article="currentArticle" v-model:editionMode="editionMode" @save-article="saveArticle"/>
+    <ArticleForm v-model:article="currentArticle" v-model:editionMode="editionMode" @save-article="saveArticle" @new-article="newArticle"/>
 
   </div>
 </template>
