@@ -28,16 +28,20 @@ h1 {
   display: grid;
   grid-template-columns: 4fr 2fr;
 }
-ul{
+
+ul {
   padding: 0;
 }
+
 li {
+  margin-left: 1rem;
   list-style: none;
 }
+
 li:not(:last-child) {
   border-bottom: black solid 1px;
-  padding-right: 2.5rem;
 }
+
 .list {
   display: flex;
   flex-direction: column;
@@ -47,8 +51,46 @@ li:not(:last-child) {
   min-height: 200px;
   overflow-y: auto;
 
-  .list-item {
-    cursor: pointer;
+  .article-group {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border-radius: 5px;
+
+    .list-item {
+      width: 90%;
+      margin: 0 ;
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+    }
+
+    .arrow {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .arrow::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid #666;
+      border-bottom: 2px solid #666;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      transition: all 0.3s ease;
+    }
+    .article-group:hover .arrow::after {
+      border-color: #007bff;
+      transform: translate(-50%, -50%) rotate(-45deg) translateX(10px);
+    }
+
+    .article-group:hover .list-item {
+      color: #007bff;
+    }
   }
 }
 
@@ -105,7 +147,7 @@ li:not(:last-child) {
       input {
         text-align: right;
         flex: 1;
-        padding-right: 40px; // Plus d'espace pour le suffixe
+        padding-right: 40px;
       }
 
       .input-suffix {
