@@ -177,6 +177,9 @@ li:not(:last-child) {
       border-radius: 50px;
       width: 60%;
       cursor: pointer;
+      &:disabled {
+        background-color: red;
+      }
 
       &--white {
         color: black;

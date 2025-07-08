@@ -47,7 +47,7 @@
         <div>{{ priceTi }} €</div>
       </div>
 
-      <button class="button" type="button" @click="handleSave">{{ buttonTitle }}</button>
+      <button class="button" :disabled="!disableButton" type="button" @click="handleSave">{{ buttonTitle }}</button>
       <button class="button button--white" v-show="edition" type="button" @click="handleNewArticle">Nouvel article</button>
     </form>
   </div>
@@ -79,13 +79,20 @@ const priceTi = computed(() => {
 function formatPrice(event) {
   const formattedPrice = parseFloat(article.value.price) || 0;
   event.target.value = formattedPrice.toFixed(2);
-
 }
 
 function formatVat(event) {
   const formattedVat = parseFloat(article.value.vat) || 0;
   event.target.value = formattedVat.toFixed(2);
 }
+
+function checkNumber(value) {
+  if (value === undefined) return true;
+  return !isNaN(value);
+}
+const disableButton = computed(() => {
+  return !(!checkNumber(article.value.price) || !checkNumber(article.value.vat));
+})
 
 const handleNewArticle = () => {
   emit("new-article");
@@ -94,7 +101,11 @@ const handleNewArticle = () => {
 const handleSave = () => {
 
   if (!article.value.name || !article.value.price) {
-    alert('Veuillez remplir au minimum le nom et le prix de l\'article');
+    alert("Veuillez remplir au minimum le nom et le prix de l'article");
+    return;
+  }
+  if (!checkNumber(article.value.price) || !checkNumber(article.value.vat)) {
+    alert("Merci de n'indiquer que des valeurs numériques")
     return;
   }
 
