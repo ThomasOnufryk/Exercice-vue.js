@@ -3,11 +3,12 @@
 }
 
 body {
-  margin: 0;
+  max-width: 980px;
+  max-height: 100dvh;
+  margin: 0 auto;
   padding: 0;
   background-color: #F4FAFF;
   font-family: 'Source Sans Pro', sans-serif;
-  height: 100lvh;
 }
 
 h1 {
@@ -17,8 +18,6 @@ h1 {
 
 #app {
   background-color: #F4FAFF;
-  max-width: 980px;
-  height: 100svh;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
@@ -48,8 +47,13 @@ li:not(:last-child) {
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 5px;
-  min-height: 200px;
+  max-height: 480px;
+
+  .articles-list {
+  margin-top: 15px;
+  max-height: 100%;
   overflow-y: auto;
+  }
 
   .article-group {
     display: flex;
@@ -59,7 +63,7 @@ li:not(:last-child) {
 
     .list-item {
       width: 90%;
-      margin: 0 ;
+      margin: 0;
       padding: 1rem 0.5rem;
       cursor: pointer;
     }
@@ -83,6 +87,7 @@ li:not(:last-child) {
       transform: translate(-50%, -50%) rotate(-45deg);
       transition: all 0.3s ease;
     }
+
     .article-group:hover .arrow::after {
       border-color: #007bff;
       transform: translate(-50%, -50%) rotate(-45deg) translateX(10px);
@@ -98,7 +103,7 @@ li:not(:last-child) {
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 5px;
-  height: 350px;
+  max-height: 350px;
   margin-left: 15px;
 
   .form-label {
@@ -160,7 +165,7 @@ li:not(:last-child) {
       }
     }
 
-    button {
+    .button {
       align-items: center;
       color: #fff;
       font-size: 1em;
@@ -171,9 +176,19 @@ li:not(:last-child) {
       border: none;
       border-radius: 50px;
       width: 60%;
+      cursor: pointer;
+      &:disabled {
+        background-color: red;
+      }
 
-      &:hover {
-        background-color: #ffb8a3;
+      &--white {
+        color: black;
+        background-color: #FFF;
+        border: 1px solid black;
+
+        &:hover {
+          background-color: white;
+        }
       }
     }
   }
@@ -185,27 +200,54 @@ li:not(:last-child) {
 }
 
 @media (600px <= width <= 850px) {
+  body {
+    max-height: 100dvh;
+    width: 100dvw;
+    padding: 0;
+  }
+  #app {
+    width: 90dvw;
+    padding: 1rem;
+  }
+
   .block {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .list {
+    max-height: 80dvh;
+  }
+  .form {
+    margin-left: 0;
+    max-height: 80dvh;
   }
 }
-@media (width <= 600px) {
+
+@media (width < 600px) {
+  body {
+    max-height: 100dvh;
+    padding: 0;
+  }
+  #app {
+    padding: 1rem;
+  }
   .block {
     display: flex;
     flex-direction: column;
   }
   .list {
     margin-bottom: 15px;
+    max-height: 50dvh;
   }
   .form {
-    height: 45vh;
     margin-left: 0;
+    max-height: 50dvh;
   }
   h1 {
     position: sticky;
   }
   .ul {
-    height: 150px;
+    height: 250px;
   }
 }
