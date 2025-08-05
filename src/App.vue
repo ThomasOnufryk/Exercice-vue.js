@@ -5,8 +5,8 @@
       <template v-if="articles.length">
         <div class="articles-list">
           <ul>
-            <li v-for="(article, index) in articles" @click="setCurrentArticle(article, index)" :key="index">
-              <ArticleList :class="{'selected': currentIndex === index}" :article="article"/>
+            <li v-for="article in articles" @click="setCurrentArticle(article)" :key="article.id">
+              <ArticleList :class="{ selected: currentIndex === article.id }" :article="article" />
             </li>
           </ul>
         </div>
@@ -16,48 +16,56 @@
       </template>
     </div>
 
-    <ArticleForm v-model:article="currentArticle" v-model:editionMode="editionMode" @save-article="saveArticle" @new-article="newArticle"/>
-
+    <ArticleForm v-model:article="currentArticle" v-model:editionMode="editionMode" @save-article="saveArticle"
+      @new-article="newArticle" />
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue";
 import ArticleForm from "@/components/ArticleForm.vue";
 import ArticleList from "@/components/ArticleList.vue";
 
 const articles = ref([
-  {name: "Achat de matériel", price: 20.00, vat: 20.00},
-  {name: "Dépose des murs", price: 150.00, vat: 20.00},
-])
+  { id: 1, name: "Achat de matériel", price: 20.0, vat: 20.0 },
+  { id: 2, name: "Dépose des murs", price: 150.0, vat: 20.0 },
+]);
 
 const editionMode = ref(false);
-const currentArticle = ref({})
+const currentArticle = ref({});
 const currentIndex = ref(-1);
 
-const setCurrentArticle = (article, index) => {
-  currentArticle.value = {...article};
-  currentIndex.value = index;
+const setCurrentArticle = (article) => {
+  currentArticle.value = { ...article };
+  currentIndex.value = article.id;
   editionMode.value = true;
-}
+};
 
 const saveArticle = () => {
   if (editionMode.value && currentIndex.value >= 0) {
-    articles.value[currentIndex.value] = {...currentArticle.value};
+    const articleIndex = articles.value.findIndex(
+      (a) => a.id === currentIndex.value
+    );
+    articles.value[articleIndex] = { ...currentArticle.value };
+    console.log(articles.value);
   } else {
-    articles.value.push({...currentArticle.value});
+    const articleId = articles.value.length
+      ? Math.max(...articles.value.map((a) => a.id)) + 1
+      : 1;
+    articles.value.push({ id: articleId, ...currentArticle.value });
+    console.log(articles.value);
   }
 
   editionMode.value = false;
   currentArticle.value = {};
   currentIndex.value = -1;
-}
+};
 
 const newArticle = () => {
   editionMode.value = false;
   currentArticle.value = {};
   currentIndex.value = -1;
-}
+};
 </script>
 
 <style scoped>
