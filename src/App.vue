@@ -38,7 +38,7 @@ const setCurrentArticle = (article) => {
 };
 
 const saveArticle = () => {
-  if (editionMode.value && currentIndex.value >= 0) {
+  if (editionMode.value && currentIndex.value != null) {
     const articleIndex = articles.value.findIndex(
         (a) => a.id === currentIndex.value
     );
