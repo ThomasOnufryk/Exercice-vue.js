@@ -7,10 +7,11 @@
 </template>
 
 <script setup>
-
-const props = defineProps({
-  article: Object,
-})
-
+defineProps({
+  article: {
+    type: Object,
+    required: false,
+  }
+});
 </script>
 
