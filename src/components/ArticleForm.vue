@@ -56,8 +56,14 @@
 <script setup>
 import {computed} from "vue";
 
-const edition = defineModel('editionMode')
-const article = defineModel('article')
+const edition = defineModel('editionMode', {
+  type: Boolean,
+  default: false
+})
+const article = defineModel('article', {
+  type: Object,
+  required: false,
+})
 
 // Définir les émissions possibles
 const emit = defineEmits(['save-article', 'new-article'])
@@ -90,6 +96,7 @@ function checkNumber(value) {
   if (value === undefined) return true;
   return !isNaN(value);
 }
+
 const disableButton = computed(() => {
   return !(!checkNumber(article.value.price) || !checkNumber(article.value.vat));
 })
